@@ -11,11 +11,6 @@ define('UPLOAD_URL', BASE_URL . '/uploads/fotos/');
 define('TESSERACT_PATH', 'tesseract');
 
 try {
-    // Verbind zonder database naam eerst om hem aan te kunnen maken
-    $dsn_base = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";charset=utf8mb4";
-    $pdoBase = new PDO($dsn_base, DB_USER, DB_PASS, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-    $pdoBase->exec("CREATE DATABASE IF NOT EXISTS `" . DB_NAME . "` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-
     $pdo = new PDO(
         "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
@@ -23,18 +18,22 @@ try {
         [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_TIMEOUT            => 5,
         ]
     );
 
-    // Auto-install tabellen als ze niet bestaan
+    // Eenmalig tabellen aanmaken als ze ontbreken
     $tables = $pdo->query("SHOW TABLES LIKE 'parasjot'")->fetchColumn();
     if (!$tables) {
         $sql = file_get_contents(__DIR__ . '/install.sql');
+        // Verwijder CREATE DATABASE statements - database bestaat al op Railway
+        $sql = preg_replace('/CREATE DATABASE[^;]+;/i', '', $sql);
+        $sql = preg_replace('/USE [^;]+;/i', '', $sql);
         foreach (array_filter(array_map('trim', explode(';', $sql))) as $stmt) {
-            if ($stmt) try { $pdo->exec($stmt); } catch (PDOException $e) { /* skip duplicate */ }
+            if ($stmt) try { $pdo->exec($stmt); } catch (PDOException $e) { /* skip */ }
         }
     }
 } catch (PDOException $e) {
     http_response_code(500);
-    die('<h1>Database fout</h1><p>' . htmlspecialchars($e->getMessage()) . '</p>');
+    die('<h1>Database fout</h1><pre>' . htmlspecialchars($e->getMessage()) . '</pre>');
 }
