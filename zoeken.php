@@ -95,7 +95,7 @@ include __DIR__ . '/includes/header.php';
 
 <div class="card" style="padding:0; overflow:hidden;">
     <?php foreach ($resultaten as $r): ?>
-    <a href="/parasja/parasja.php?id=<?= $r['parasja_id'] ?? $r['id'] ?>"
+    <a href="<?= BASE_URL ?>/parasja.php?id=<?= $r['parasja_id'] ?? $r['id'] ?>"
        class="search-result">
         <div class="result-type type-<?= $r['type'] ?>">
             <?= $r['type'] === 'parasja' ? 'Parasja' : ($r['type'] === 'notitie' ? 'Notitie' : 'Foto OCR') ?>

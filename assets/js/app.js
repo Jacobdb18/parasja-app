@@ -35,7 +35,7 @@ async function notitieOpslaan(parasjaId, parasjaSchemaId) {
     const titel = document.getElementById('notitie-titel')?.value?.trim();
     if (!tekst) { toast('Vul een notitie in', 'error'); return; }
 
-    const res = await fetch('/parasja/api/notitie.php', {
+    const res = await fetch(window.BASE_URL+'/api/notitie.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actie: 'opslaan', parasja_id: parasjaId, parasja_schema_id: parasjaSchemaId, tekst, titel })
@@ -52,7 +52,7 @@ async function notitieOpslaan(parasjaId, parasjaSchemaId) {
 
 async function notitieVerwijderen(id) {
     if (!confirm('Notitie verwijderen?')) return;
-    const res = await fetch('/parasja/api/notitie.php', {
+    const res = await fetch(window.BASE_URL+'/api/notitie.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actie: 'verwijderen', id })
@@ -105,7 +105,7 @@ async function uploadFoto(file) {
     form.append('notitie', notitie || '');
 
     try {
-        const res = await fetch('/parasja/api/upload.php', { method: 'POST', body: form });
+        const res = await fetch(window.BASE_URL+'/api/upload.php', { method: 'POST', body: form });
         const data = await res.json();
         if (data.success) {
             if (ocrBox) {
@@ -130,7 +130,7 @@ async function uploadFoto(file) {
 
 async function ocrOpslaan(fotoId) {
     const tekst = document.getElementById('ocr-tekst')?.value;
-    const res = await fetch('/parasja/api/upload.php', {
+    const res = await fetch(window.BASE_URL+'/api/upload.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actie: 'ocr-opslaan', id: fotoId, ocr_bewerkt: tekst })
@@ -152,7 +152,7 @@ function openFoto(id, src, ocrTekst, datum) {
 async function ocrBewerktOpslaan() {
     const id = document.getElementById('viewer-foto-id').value;
     const tekst = document.getElementById('viewer-tekst').value;
-    const res = await fetch('/parasja/api/upload.php', {
+    const res = await fetch(window.BASE_URL+'/api/upload.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actie: 'ocr-opslaan', id, ocr_bewerkt: tekst })
@@ -164,7 +164,7 @@ async function ocrBewerktOpslaan() {
 
 async function fotoVerwijderen(id) {
     if (!confirm('Foto verwijderen?')) return;
-    const res = await fetch('/parasja/api/upload.php', {
+    const res = await fetch(window.BASE_URL+'/api/upload.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actie: 'verwijderen', id })

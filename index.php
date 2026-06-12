@@ -74,7 +74,7 @@ include __DIR__ . '/includes/header.php';
 <?php if (!$parasja): ?>
 <div class="card" style="text-align:center; padding:3rem;">
     <p style="color:var(--text-muted)">Geen parasja gevonden. Controleer of de database correct is gevuld.</p>
-    <a href="/parasja/config/setup.php" class="btn btn-green" style="margin-top:1rem">Database instellen</a>
+    <a href="<?= BASE_URL ?>/config/setup.php" class="btn btn-green" style="margin-top:1rem">Database instellen</a>
 </div>
 <?php else: ?>
 
@@ -122,7 +122,7 @@ include __DIR__ . '/includes/header.php';
             <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             Foto uploaden
         </button>
-        <a href="/parasja/parasja.php?id=<?= $parasja['parasja_id'] ?>" class="btn btn-outline">
+        <a href="<?= BASE_URL ?>/parasja.php?id=<?= $parasja['parasja_id'] ?>" class="btn btn-outline">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             Volledig archief
         </a>
@@ -131,13 +131,13 @@ include __DIR__ . '/includes/header.php';
     <!-- Navigatie vorige/volgende -->
     <div style="display:flex; gap:10px; margin-top:1.25rem; padding-top:1.25rem; border-top:1px solid rgba(255,255,255,0.15);">
         <?php if ($vorige): ?>
-        <a href="/parasja/parasja.php?id=<?= $vorige['parasja_id'] ?? $vorige['id'] ?>&schema=<?= $vorige['id'] ?>" class="btn btn-outline btn-sm">
+        <a href="<?= BASE_URL ?>/parasja.php?id=<?= $vorige['parasja_id'] ?? $vorige['id'] ?>&schema=<?= $vorige['id'] ?>" class="btn btn-outline btn-sm">
             <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
             <?= htmlspecialchars($vorige['naam_transliteratie']) ?>
         </a>
         <?php endif; ?>
         <?php if ($volgende): ?>
-        <a href="/parasja/parasja.php?id=<?= $volgende['parasja_id'] ?? $volgende['id'] ?>&schema=<?= $volgende['id'] ?>" class="btn btn-outline btn-sm" style="margin-left:auto">
+        <a href="<?= BASE_URL ?>/parasja.php?id=<?= $volgende['parasja_id'] ?? $volgende['id'] ?>&schema=<?= $volgende['id'] ?>" class="btn btn-outline btn-sm" style="margin-left:auto">
             <?= htmlspecialchars($volgende['naam_transliteratie']) ?>
             <svg viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
         </a>

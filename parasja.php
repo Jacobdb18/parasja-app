@@ -4,13 +4,13 @@ require_once __DIR__ . '/config/db.php';
 $parasjaId = (int)($_GET['id'] ?? 0);
 $schemaId  = (int)($_GET['schema'] ?? 0);
 
-if (!$parasjaId) { header('Location: /parasja/archief.php'); exit; }
+if (!$parasjaId) { header('Location: ' . BASE_URL . '/archief.php'); exit; }
 
 // Parasja ophalen
 $stmt = $pdo->prepare("SELECT * FROM parasjot WHERE id = ?");
 $stmt->execute([$parasjaId]);
 $parasja = $stmt->fetch();
-if (!$parasja) { header('Location: /parasja/archief.php'); exit; }
+if (!$parasja) { header('Location: ' . BASE_URL . '/archief.php'); exit; }
 
 // Schema (datum) ophalen
 $schema = null;
@@ -77,7 +77,7 @@ include __DIR__ . '/includes/header.php';
 
 <!-- Breadcrumb -->
 <div style="margin-bottom:1.25rem; font-size:0.85rem; color:var(--text-muted); display:flex; gap:6px; align-items:center;">
-    <a href="/parasja/archief.php" style="color:var(--primary); text-decoration:none;">Archief</a>
+    <a href="<?= BASE_URL ?>/archief.php" style="color:var(--primary); text-decoration:none;">Archief</a>
     <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;"><polyline points="9,18 15,12 9,6"/></svg>
     <span><?= htmlspecialchars($parasja['naam_transliteratie']) ?></span>
 </div>
@@ -119,13 +119,13 @@ include __DIR__ . '/includes/header.php';
     <!-- Navigatie -->
     <div style="display:flex; gap:10px; margin-top:1.25rem; padding-top:1.25rem; border-top:1px solid rgba(255,255,255,0.15);">
         <?php if ($vorige): ?>
-        <a href="/parasja/parasja.php?id=<?= $vorige['id'] ?>" class="btn btn-outline btn-sm">
+        <a href="<?= BASE_URL ?>/parasja.php?id=<?= $vorige['id'] ?>" class="btn btn-outline btn-sm">
             <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
             <?= htmlspecialchars($vorige['naam_transliteratie']) ?>
         </a>
         <?php endif; ?>
         <?php if ($volgende): ?>
-        <a href="/parasja/parasja.php?id=<?= $volgende['id'] ?>" class="btn btn-outline btn-sm" style="margin-left:auto;">
+        <a href="<?= BASE_URL ?>/parasja.php?id=<?= $volgende['id'] ?>" class="btn btn-outline btn-sm" style="margin-left:auto;">
             <?= htmlspecialchars($volgende['naam_transliteratie']) ?>
             <svg viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
         </a>
@@ -144,7 +144,7 @@ include __DIR__ . '/includes/header.php';
     </div>
     <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <?php foreach ($schemas as $sc): ?>
-        <a href="/parasja/parasja.php?id=<?= $parasjaId ?>&schema=<?= $sc['id'] ?>"
+        <a href="<?= BASE_URL ?>/parasja.php?id=<?= $parasjaId ?>&schema=<?= $sc['id'] ?>"
            style="padding:8px 16px; border:1.5px solid var(--border); border-radius:20px; font-size:0.85rem; text-decoration:none; color:var(--text);
                   <?= ($schema && $sc['id'] == $schema['id']) ? 'background:var(--primary);color:white;border-color:var(--primary);' : '' ?>">
             <?= formatDatum($sc['shabbat_datum']) ?> &middot; <?= $sc['joods_jaar'] ?>

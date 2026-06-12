@@ -86,7 +86,7 @@ include __DIR__ . '/includes/header.php';
             <?php endforeach; ?>
         </select>
         <?php if ($filterBoek || $filterJaar): ?>
-        <a href="/parasja/archief.php" class="btn btn-sm" style="background:var(--bg);border:1.5px solid var(--border);">Wis filters</a>
+        <a href="<?= BASE_URL ?>/archief.php" class="btn btn-sm" style="background:var(--bg);border:1.5px solid var(--border);">Wis filters</a>
         <?php endif; ?>
         <span style="margin-left:auto; font-size:0.85rem; color:var(--text-muted);"><?= count($parasjot) ?> parasjot</span>
     </form>
@@ -103,7 +103,7 @@ include __DIR__ . '/includes/header.php';
     <div class="boek-divider"><?= htmlspecialchars($p['boek']) ?></div>
     <?php endif; ?>
 
-    <a href="/parasja/parasja.php?id=<?= $p['parasja_id'] ?>&schema=<?= $p['schema_id'] ?>"
+    <a href="<?= BASE_URL ?>/parasja.php?id=<?= $p['parasja_id'] ?>&schema=<?= $p['schema_id'] ?>"
        class="archief-item <?= $p['schema_id'] == $huidigSchemaId ? 'current' : '' ?>">
 
         <div class="volgorde"><?= $p['volgorde'] ?></div>

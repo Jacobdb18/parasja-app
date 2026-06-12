@@ -4,6 +4,7 @@
     <p>פָּרָשַׁת הַשָּׁבוּעַ &middot; Parasja van de Week &middot; Torah Studie</p>
 </footer>
 
-<script src="/parasja/assets/js/app.js"></script>
+<script>window.BASE_URL = "<?= BASE_URL ?>";</script>
+<script src="<?= BASE_URL ?>/assets/js/app.js"></script>
 </body>
 </html>
