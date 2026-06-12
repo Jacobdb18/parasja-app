@@ -1,0 +1,7 @@
+{
+    "name": "parasja/studie-app",
+    "description": "Parasja Torah Studie App",
+    "require": {
+        "php": ">=8.0"
+    }
+}

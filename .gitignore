@@ -1,0 +1,4 @@
+uploads/fotos/*
+!uploads/fotos/.gitkeep
+vendor/
+config/db.local.php
